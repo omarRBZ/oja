@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link rel="stylesheet" href="css/navegacion.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="css/estilos.css" media="screen" title="no title" charset="utf-8">
+  <style media="screen">
+    .selecionar {
+      background-color: rgba(0, 168, 250, 0.55);
+      color: white;
+    }
+  </style>
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/inicializacion.js">
+  </script>
+  <script type="text/javascript" src="js/calendario.js"></script>
+  <script type="text/javascript" src="js/seleciones.js"></script>
+  <script type="text/javascript">
+    function openVentana() {
+      $('.conten').slideDown("slown");
+    }
+
+    function cerrarVentana() {
+      $('.conten').slideUp("fast");
+    }
+
+    function selecionar(id_celda) {
+
+      $('#' + id_celda).addClass('selecionada');
+      console.log("celda selecionada");
+      openVentana();
+
+    }
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $.ajax({
+        type: "POST",
+        url: "PHP/FormAgenda.php",
+        success: function(response) {
+          $('#tratamiento').html(response).fadeIn();
+          console.log(response);
+
+        }
+
+      });
+      $.ajax({
+        type: "POST",
+        url: "PHP/cargarTipos.php",
+        success: function(response) {
+          $('#tipoTratamiento').html(response).fadeIn();
+        }
+      });
+      $.ajax({
+        type: "POST",
+        url: "PHP/cargarEnfermeras.php",
+        success: function(response) {
+          $('#enfermera').html(response).fadeIn();
+        }
+      });
+      $.ajax({
+        type: "POST",
+        url: "PHP/cargarCabinas.php",
+        success: function(response) {
+          $('#cabina').html(response).fadeIn();
+        }
+      });
+
+
+      $("#tratamiento").change(function() {
+
+        var texto = $('#tratamiento option:selected').text();
+
+
+
+        $("#tratamiento").each(function() {
+
+          $.post("PHP/cargarTipos.php", {
+            texto: texto
+          }, function(data) {
+            $("#tipoTratamiento").html(data);
+          });
+        });
+
+      });
+
+      $("#tipoTratamiento").change(function() {
+
+        $("#tipoTratamiento").each(function() {
+
+          $.post("PHP/cargarCabinas.php", {
+            texto: texto
+          }, function(data) {
+            $("#cabina").html(data);
+          });
+        });
+
+      });
+
+
+    });
+  </script>
+
+
+
+  <nav class="#263238 blue-grey darken-4">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="login.html"><i class="material-icons left light-green-text">fingerprint</i>Login</a></li>
+        <li><a href="altaPaciente.html"><i class="material-icons left light-green-text">contacts</i>Alta Paciente</a></li>
+        <li><a href="agendar.html"><i class="material-icons left light-green-text">today</i>Agendar </a></li>
+        <li><a href="RegistroDoctor.html"><i class="material-icons left light-green-text">library_add</i>Agregar doctor</a></li>
+        <li><a href="login.html"><i class="material-icons left light-green-text">exit</i>salir</a></li>
+      </ul>
+
+      <ul class="side-nav #263238 blue-grey darken-4" id="mobile-demo">
+        <li><a href="login.html" class="light-green-text"><i class="material-icons left light-green-text">supervisor_account</i>Login</a></li>
+        <li><a href="altaPaciente.html" class="light-green-text"><i class="material-icons left light-green-text">contacts</i>Alta Paciente</a></li>
+        <li><a href="agendar.html" class="light-green-text"><i class="material-icons left light-green-text">today</i>Agendar </a></li>
+        <li><a href="RegistroDoctor.html" class="light-green-text"><i class="material-icons left light-green-text">library_add</i>Agregar doctor</a></li>
+        <li><a href="login.html"><i class="material-icons left">exit</i>salir</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <div id="contenedor" class="conten">
+
+    <div class="form">
+      <div class="row center">
+        <div class=" m12">
+          <div class="card white">
+            <div class="card-content">
+              <div class="card-title light-green-text ">
+
+                <a href="#" class="texto light-green-text"><i class="material-icons light-green-text ">event</i>AGENDA</a>
+
+
+              </div>
+
+              <form class="" action="index.html" name="formulario" method="post">
+                <div class="input-field">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" name="name" value="" id="nombre" class="validate ">
+                </div>
+
+                <div class="input-field ">
+                  <label for="apellido" class="">curp</label>
+                  <input type="text" name="name" value="" id="apellido">
+                </div>
+                <div class="input-field">
+                  <label for="Expediente">No. de Expediente</label>
+                  <input type="text" name="expediente" value="" id="expediente">
+
+                </div>
+                <div class="row">
+
+                  <div class="col s3">
+                    <select name="tratamiento" id="tratamiento"></select>
+                  </div>
+
+                  <div class="col s3">
+                    <select id="tipoTratamiento"></select>
+                  </div>
+
+                  <div class="col s3">
+                    <select id="cabina" name="cabina"></select>
+                  </div>
+
+                  <div class="col s3">
+                    <select id="enfermera" name="enfermera"></select>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col s4">
+                    <label for="tiempoAproximado">tiempo Aproximado</label>
+                    <time id="tiempoAproximado">00:00</time>
+                  </div>
+
+
+                </div>
+
+              </form>
+            </div>
+
+            <div class="card-action">
+              <a id='agregar' onclick="barra_de_estado( contador)" href="#" class="waves-light btn small"><i class="material-icons left">add</i>Agregar</a>
+              <a href="javascript:cerrarVentana()" class="waves-light btn small red"><i class="material-icons left white-text">clear</i>Cancelar</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">event</i>
+        <h2 id="titulos"></h2></div>
+      <div class="collapsible-body">
+        <div><a href="#" id="anterior" onclick="mesantes()" class="button blue-grey darken-4 light-green-text"><i class="material-icons left">navigate_next</i></a></div>
+        <div><a href="#" id="posterior" onclick="mesdespues()" class="button blue-grey darken-4 light-green-text"><i class="material-icons right">navigate_before</i></a></div>
+        <h2 id="titulos"></h2>
+        <div class="row ">
+          <div class="col s12 m4 l8 center-align " id="fechaactual"> <i class="center-align " onclick="actualizar()">HOY:</i></div>
+        </div>
+        <div class="row col s6">
+          <table id="diasc" class="">
+            <tr id="fila0">
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr id="fila1">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="fila2">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="fila3">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="fila4">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="fila5">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id="fila6">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="row" id="buscafecha">
+
+          <form action="#" name="buscar">
+            <div class="input-field col s4">
+              <select name="buscames">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+            </div>
+            <div class="col s6">
+              <input type="text" name="buscaanno" maxlength="4" size="4" class="col s3" />
+              <input type="button" value="BUSCAR" onclick="mifecha()" class="btn col s3" />
+            </div>
+
+        </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons ">week</i>Semana</div>
+      <div class="collapsible-body">
+
+
+        <table>
+          <thead>
+            <tr id="filaEncabezado">
+              <th><a href="#"><i class="material-icons  ">av_timer</i>horas</a></th>
+              <th id="lunes"></th>
+              <th id="martes"></th>
+              <th id="miercoles"></th>
+              <th id="juevez"></th>
+              <th id="viernes"></th>
+              <th id="sabado"></th>
+              <th id="domingo"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td id="hora1">9:00 Am</td>
+              <td id="celda1" onclick="selecionar(this.id)"></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" id="agendar" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">9:30 Am</td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td>
+                <ahref="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a>
+              </td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">10:00 Am</td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">10:30 Am</td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">11:00 Am</td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" href="javascript:openVentana()" class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">11:30 Am</td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a href="javascript:openVentana()" class=" tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">12:00 Am</td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">12:30 pm</td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">1:00 pm</td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip=" Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">1:30 pm</td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">2:00 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">2:30 pm</td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">3:00 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">3:30 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">4:00 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+            <tr>
+              <td id="hora1">4:30 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">5:00 pm</td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">5:30 pm</td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="  tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">6:00 pm</td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class=" tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">6:30 pm</td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped  " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+            <tr>
+              <td id="hora1">7:00 pm</td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+              <td><a class="tooltipped " data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons black-text">add</i></a></td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons ">week</i>Semana</div>
+      <div class="collapsible-body">
+        <iframe src="https://calendar.google.com/calendar/embed?mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FMexico_City" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+      </div>
+
+    </li>
+  </ul>
+
+  <div class="fixed-action-btn  click-to-toggle" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red btn tooltipped rouned" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons">event</i></a></li>
+      <li><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Agregar usuario"><i class="material-icons">person</i></a></li>
+      <li>
+        <a class="btn-floating green tooltipped" data-position="left" data-delay="50" data-tooltip="Usuario potencial"><i class="mateAgendar" </i></a>
+      </li>
+      <li><a class="btn-floating blue tooltipped" data-position="left" data-delay="50" data-tooltip="Registro"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+
+</body>
+
+</html>

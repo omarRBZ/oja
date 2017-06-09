@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css" media="screen" title="no title" charset="utf-8">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link rel="stylesheet" href="css/estilos.css" media="screen" title="no title" charset="utf-8">
+
+
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".button-collapse").sideNav();
+      $('select').material_select();
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 20 // Creates a dropdown of 15 years to control year
+      });
+
+    });
+  </script>
+
+  <!-- Dropdown Structure -->
+  <nav class="#263238 blue-grey darken-4">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse light-green-text"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="login.html" class=""><i class="material-icons left light-green-text">fingerprint</i>Login</a></li>
+        <li><a href="altaPaciente.html" class=""><i class="material-icons left light-green-text">contacts</i>Alta Paciente</a></li>
+        <li><a href="agendar.html" class=""><i class="material-icons left light-green-text">today</i>Agendar </a></li>
+        <li><a href="RegistroDoctor.html" class=""><i class="material-icons left light-green-text">library_add</i>Agregar doctor</a></li>
+        <li><a href="login.html" class=""><i class="material-icons left light-green-text">people_outline</i>salir</a></li>
+      </ul>
+      <ul class="side-nav #263238 blue-grey darken-4" id="mobile-demo">
+        <li><a clas="light-green-text" href="login.html"><i class="material-icons left light-green-text">supervisor_account</i>Login</a></li>
+        <li><a clas="light-green-text" href="altaPaciente.html"><i class="material-icons left light-green-text">contacts</i>Alta Paciente</a></li>
+        <li><a clas="light-green-text" href="agendar.html"><i class="material-icons left light-green-text">today</i>Agendar </a></li>
+        <li><a clas="light-green-text" href="RegistroDoctor.html"><i class="material-icons left light-green-text">library_add</i>Agregar doctor</a></li>
+        <li><a clas="light-green-text" href="login.html"><i class="material-icons left light-green-text">people_outline</i>salir</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <div class="row">
+    <form class="col s6" action="PHP/conexion.php" method="POST">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" name="nombre">
+          <label for="first_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate" name="apellidoPaterno">
+          <label for="last_name">Apellido Paterno</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="password" type="text" class="validate" name="apellidoMaterno">
+          <label for="password">Apellido Materno</label>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <select id="select" name="donador">
+              <option value="" disabled selected>Donador de organos</option>
+              <option value="SI">SI</option>
+              <option value="NO">NO</option>
+
+            </select>
+            <label>Materialize Select</label>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="direccion" type="text" class="validate" name="direccion">
+          <label for="direccion">direccion</label>
+        </div>
+        <div class="input-field col s6">
+          <label for="fecha_de_nacimento">fecha de nacimiento</label>
+          <i class="material-icons prefix">event</i>
+          <input id="icon_prefix" type="text" class="validate" value="" name="fecha_de_nacimento">
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select id="select" name="tipo_sanguineo">
+        <option value="" disabled selected>Tipo de Sangre</option>
+        <option value="O+">O+</option>
+        <option value="0-">O-</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+      </select>
+          <label>Materialize Select</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="telefono" type="text" class="validate" name="telefono">
+          <label for="telefono">telefono</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="email" type="email" class="validate" name="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <textarea id="textarea1" class="materialize-textarea" length="120" name="recomendaciones"></textarea>
+          <label for="textarea1">Textarea</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input'field col s12">
+          <a class="button blue-grey darken-4 light-green-text ">cancelar
+              <span class="material-icons left prefix">cancel</span>
+            </a>
+          <button type="submit" name="guardar" method="post">guardar</button>
+
+        </div>
+
+      </div>
+
+    </form>
+    <div class="fixed-action-btn  click-to-toggle" style="bottom: 45px; right: 24px;">
+      <a class="btn-floating btn-large red">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul>
+        <li><a class="btn-floating red btn tooltipped rouned" data-position="left" data-delay="50" data-tooltip="Agendar"><i class="material-icons">event</i></a></li>
+        <li><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Agregar usuario"><i class="material-icons">person</i></a></li>
+        <li>
+          <a class="btn-floating green tooltipped" data-position="left" data-delay="50" data-tooltip="Usuario potencial"><i class="mateAgendar" </i></a>
+        </li>
+        <li><a class="btn-floating blue tooltipped" data-position="left" data-delay="50" data-tooltip="Registro"><i class="material-icons">attach_file</i></a></li>
+      </ul>
+    </div>
+
+
+
+
+</body>
+
+</html>

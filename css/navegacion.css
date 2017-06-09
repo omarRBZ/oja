@@ -1,0 +1,70 @@
+#diasc { border: 1px solid black; border-collapse:
+         separate; border-spacing: 3px;
+       width: 40em;
+     height: 20em;
+
+     position: relative;;
+     left: 30%;
+
+
+
+
+
+   }
+
+#diasc th,#diasc td { font: normal 11pt arial; width: 70px; height: 30px; }
+#diasc th { color: #0288d1; background-color: #eceff1 }
+#diasc td { color: #0288d1; background-color: #eceff1 }
+#fechas{
+  border: 1px solid black;
+  border-collapse: separate;
+  border-spacing: 3px;
+
+}
+#fechas th ,#fechas td{
+
+  font: normal 11pt arial;
+  width: 70px;
+  height: 30px;
+
+}
+#fechas th{
+  color:  #0288d1;
+  background-color: #eceff1;
+}
+#fechas td{
+  color: #0288d1;
+  background-color: #eceff1;
+
+
+
+}
+#anterior { float: left; width: 100px; font: bold 12pt arial;
+          padding: 0.5em 0.1em; cursor: pointer ; }
+#posterior { float: right; width: 100px; font: bold 12pt arial;
+          padding: 0.5em 0.1em; cursor: pointer ;}
+#anterior:hover {color: blue;text-decoration: underline;}
+#posterior:hover {color: blue; text-decoration: underline;}
+#titulos { font: normal 20pt "arial black"; padding: 0.2em; }
+
+
+.conten{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(4, 4, 4, 0.42);
+  top:0em;
+  left: 0px;
+  display: none;
+}
+.form{
+  width: 700px;
+  height: 700px;
+  top: 30%;
+  left: 50%;
+  position: absolute;
+  margin-left: -350px;
+  margin-top: -200px;
+
+
+}
